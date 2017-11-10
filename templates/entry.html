@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h2>{{ the_title }}</h2>
+
+<form method='POST' action='/sum'>
+<table>
+<p>Use this form to sum two numbers:</p>
+<tr><td>Num1:</td><td><input name='num1' type='TEXT' width='60'></td></tr>
+<tr><td>Num2:</td><td><input name='num2' type='TEXT' width='60'></td></tr>
+</table>
+<p>When you're ready, click this button:</p>
+<p><input value='Do it!' type='SUBMIT'></p>
+</form>
+
+{% endblock %}

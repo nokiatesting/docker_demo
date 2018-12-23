@@ -14,6 +14,3 @@ services:
       - mydata:/var/lib/mysql
     networks:
       - testnet
-
-volumes:
-  - mydata

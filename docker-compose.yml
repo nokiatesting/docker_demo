@@ -8,9 +8,9 @@ services:
       - mysql
   mysql:
     image: mysql:5
-    environment:
-      MYSQL_ROOT_PASSWORD: root
     volumes:
       - mydata:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
     networks:
       - testnet

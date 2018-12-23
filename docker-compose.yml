@@ -2,19 +2,15 @@ version: '3'
 services:
   demo:
     image: nokiatesting/docker_demo:mysql
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
   mysql:
     image: mysql:5
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      - type: volume
-        source: mydata
-        target: /var/lib/mysql
+      - mydata:/var/lib/mysql
     networks:
-      testnet
-
-volumes:
-  mydata:
-
-networks:
-  testnet:
+      - testnet

@@ -7,8 +7,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
     volumes:
-      -type: volume
-       source: mydata
-       target: /var/lib/mysql
+      - type: volume
+        source: mydata
+        target: /var/lib/mysql
     networks:
       testnet

@@ -15,4 +15,4 @@ services:
     networks:
       - testnet
 volumes:
-  - mydata:
+  - mydata

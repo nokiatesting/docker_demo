@@ -14,5 +14,3 @@ services:
       MYSQL_ROOT_PASSWORD: root
     networks:
       - testnet
-volumes:
-  - mydata

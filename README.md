@@ -2,6 +2,7 @@
 A python web application on docker for demo
 
 commands:
+
 docker build -t demo_img .
 
 docker history demo_img

@@ -1,17 +1,8 @@
 version: '3'
 services:
-  demo:
-    image: nokiatesting/docker_demo:mysql
-    ports:
-      - "5000:5000"
-    depends_on:
-      - mysql
-    networks:
-      - testnet
   mysql:
     image: mysql:5
-    ports:
-      - "3306:3306"
+    restart: always
     volumes:
       - "mydata:/var/lib/mysql"
     environment:
@@ -19,11 +10,12 @@ services:
       MYSQL_DATABASE: testdb
       MYSQL_USER: root
       MYSQL_PASSWORD: root
-    networks:
-      - testnet
+  demo:
+    image: nokiatesting/docker_demo:mysql
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mysql
 
 volumes:
   mydata:
-  
-networks:
-  testnet:

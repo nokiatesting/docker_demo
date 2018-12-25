@@ -10,6 +10,8 @@ services:
       - testnet
   mysql:
     image: mysql:5
+    ports:
+      - "3306:3306"
     volumes:
       - "mydata:/var/lib/mysql"
     environment:

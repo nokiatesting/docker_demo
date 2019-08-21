@@ -28,7 +28,7 @@ def hello() -> '302':
 @app.route('/entry')
 def entry_page() -> 'html':
     return render_template('entry.html',
-                           the_title='Welcome to Docker Basic Demo page!')
+                           the_title='This is Updated Demo page!')
 
 @app.route('/sum', methods=['POST'])
 def do_sum() -> 'html':

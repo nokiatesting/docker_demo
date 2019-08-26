@@ -6,11 +6,24 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@mysql-0.mysql/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@mysql-read/testdb'
 app.config['SQLALCHEMY_BINDS'] = {
-        'read': 'mysql://root:@mysql-read/testdb'
+        'write': 'mysql://root:@mysql-0.mysql/testdb'
 }
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Remove warning
+
+db1 = SQLAlchemy(app)
+class LogW(db1.Model):
+    __bind_key__ = 'write'
+    __tablename__ = 'log'
+    id = db1.Column(db1.Integer, primary_key=True)
+    ts = db1.Column(db1.DateTime, nullable=False, default=datetime.utcnow)
+    num1 = db1.Column(db1.String(32), nullable=False)
+    num2 = db1.Column(db1.String(32), nullable=False)
+    ip = db1.Column(db1.String(16), nullable=False)
+    browser_string = db1.Column(db1.String(256), nullable=False)
+    results = db1.Column(db1.String(64), nullable=False)
+
 db = SQLAlchemy(app)
 class Log(db.Model):
     __tablename__ = 'log'
@@ -36,13 +49,13 @@ def entry_page() -> 'html':
 def do_sum() -> 'html':
     @copy_current_request_context
     def log_request(req: 'flask_request', res: str) -> None:
-        log = Log(num1=req.form['num1'],
+        log = LogW(num1=req.form['num1'],
                   num2=req.form['num2'],
                   ip=req.remote_addr,
                   browser_string=req.user_agent.browser,
                   results=res)
-        db.session.add(log)
-        db.session.commit()
+        db1.session.add(log)
+        db1.session.commit()
     num1 = request.form['num1']
     num2 = request.form['num2']
     result = str(int(num1) + int(num2))
@@ -71,5 +84,5 @@ def view_log() -> 'html':
                            the_data=content)
 
 if __name__ == '__main__':
-    db.create_all()
+    db1.create_all()
     app.run(host='0.0.0.0', debug=True)

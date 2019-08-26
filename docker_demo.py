@@ -6,9 +6,9 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@mysql-read/testdb'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:@mysql-0.mysql/testdb'
 app.config['SQLALCHEMY_BINDS'] = {
-        'write': 'mysql://root:@mysql-0.mysql/testdb'
+        'read': 'mysql://root:@mysql-read/testdb'
 }
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Remove warning
 db = SQLAlchemy(app)
@@ -71,5 +71,5 @@ def view_log() -> 'html':
                            the_data=content)
 
 if __name__ == '__main__':
-    db.create_all(bind='write')
+    db.create_all()
     app.run(host='0.0.0.0', debug=True)
